@@ -7,6 +7,7 @@ import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -123,6 +124,13 @@ public class BacaActivity extends AppCompatActivity {
                 imgCheck.setVisibility(View.GONE);
 
                 Toast.makeText(BacaActivity.this, "Record start", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnStop.performClick();
+                    }
+                }, 2000);
             }
         });
 
