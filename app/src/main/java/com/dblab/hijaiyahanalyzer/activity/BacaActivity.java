@@ -20,8 +20,8 @@ import android.widget.Toast;
 
 import com.dblab.hijaiyahanalyzer.R;
 import com.dblab.hijaiyahanalyzer.model.Hijaiyah;
+import com.dblab.hijaiyahanalyzer.wav.WavAudioRecorder;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -31,8 +31,8 @@ public class BacaActivity extends AppCompatActivity {
 
     private ImageView imgAtas, imgBawah, imgCheck;
     private Button btnPlay, btnStop, btnRecord, btnVerifikasi;
-    private MediaRecorder audioRecorder;
-    private String outputFile;
+    private WavAudioRecorder audioRecorder;
+    private static final String outputFile = Environment.getExternalStorageDirectory() + "/recording.wav";
 
     final private int REQUEST_CODE_ASK_STORAGE = 120;
     final private int REQUEST_CODE_ASK_RECORDING = 121;
@@ -81,9 +81,7 @@ public class BacaActivity extends AppCompatActivity {
                 requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_STORAGE);
                 return;
             }
-            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
         } else {
-            outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recording.3gp";
         }
         Log.i("OutputFileHabib", outputFile);
 
@@ -113,7 +111,7 @@ public class BacaActivity extends AppCompatActivity {
                     }
                     audioRecorder.prepare();
                     audioRecorder.start();
-                } catch (IllegalStateException | IOException ex) {
+                } catch (IllegalStateException ex) {
                     ex.printStackTrace();
                 }
 
@@ -185,7 +183,6 @@ public class BacaActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_CODE_ASK_STORAGE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    outputFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/recordapps/recording.3gp";
                     btnRecord.setEnabled(true);
                 } else {
                     btnRecord.setEnabled(false);
@@ -217,10 +214,7 @@ public class BacaActivity extends AppCompatActivity {
     }
 
     void setupMediaRecorder() {
-        audioRecorder = new MediaRecorder();
-        audioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        audioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        audioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        audioRecorder = WavAudioRecorder.getInstanse();
         audioRecorder.setOutputFile(outputFile);
     }
 }
