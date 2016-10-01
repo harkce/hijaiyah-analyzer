@@ -25,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new RtlGridLayoutManager(getApplicationContext(), 4);
         rv.setLayoutManager(layoutManager);
 
-        ArrayList<Hijaiyah> hijaiyahList = prepareData();
+        final ArrayList<Hijaiyah> hijaiyahList = prepareData();
         HijaiyahAdapter adapter = new HijaiyahAdapter(getApplicationContext(), hijaiyahList);
         adapter.setOnItemClickListener(new HijaiyahAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Hijaiyah item) {
                 Intent intent = new Intent(MainActivity.this, HarakatActivity.class);
                 intent.putExtra("huruf", item);
+                intent.putExtra("index", hijaiyahList.indexOf(item));
                 startActivity(intent);
             }
         });

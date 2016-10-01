@@ -26,6 +26,8 @@ public class HarakatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_harakat);
 
+        final int hurufIndex = getIntent().getIntExtra("index", 0);
+
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv_harakat);
         rv.setHasFixedSize(true);
         RtlGridLayoutManager layoutManager = new RtlGridLayoutManager(getApplicationContext(), 3);
@@ -37,7 +39,7 @@ public class HarakatActivity extends AppCompatActivity {
         });
         rv.setLayoutManager(layoutManager);
 
-        ArrayList<Hijaiyah> harakatList = prepareData();
+        final ArrayList<Hijaiyah> harakatList = prepareData();
         HijaiyahAdapter adapter = new HijaiyahAdapter(getApplicationContext(), harakatList);
         final Hijaiyah huruf = (Hijaiyah) getIntent().getSerializableExtra("huruf");
         adapter.setOnItemClickListener(new HijaiyahAdapter.OnItemClickListener() {
@@ -47,6 +49,8 @@ public class HarakatActivity extends AppCompatActivity {
                     Intent intent = new Intent(HarakatActivity.this, BacaActivity.class);
                     intent.putExtra("huruf", huruf);
                     intent.putExtra("harakat", item);
+                    int alphIndex = (hurufIndex * 6) + harakatList.indexOf(item);
+                    intent.putExtra("index", alphIndex);
                     startActivity(intent);
                 }
             }

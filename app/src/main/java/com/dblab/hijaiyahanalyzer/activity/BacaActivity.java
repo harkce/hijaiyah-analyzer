@@ -3,7 +3,6 @@ package com.dblab.hijaiyahanalyzer.activity;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dblab.hijaiyahanalyzer.R;
@@ -31,16 +31,21 @@ public class BacaActivity extends AppCompatActivity {
 
     private ImageView imgAtas, imgBawah, imgCheck;
     private Button btnPlay, btnStop, btnRecord, btnVerifikasi;
+    private TextView txtIndex;
     private WavAudioRecorder audioRecorder;
     private static final String outputFile = Environment.getExternalStorageDirectory() + "/recording.wav";
 
     final private int REQUEST_CODE_ASK_STORAGE = 120;
     final private int REQUEST_CODE_ASK_RECORDING = 121;
 
+    private int alphIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_baca);
+
+        alphIndex = getIntent().getIntExtra("index", 0);
 
         imgAtas = (ImageView) findViewById(R.id.img_atas);
         imgBawah = (ImageView) findViewById(R.id.img_bawah);
@@ -50,6 +55,8 @@ public class BacaActivity extends AppCompatActivity {
         btnStop = (Button) findViewById(R.id.btn_stop);
         btnRecord = (Button) findViewById(R.id.btn_record);
         btnVerifikasi = (Button) findViewById(R.id.btn_verifikasi);
+
+        txtIndex = (TextView) findViewById(R.id.txt_index);
 
         btnStop.setEnabled(false);
         btnPlay.setEnabled(false);
@@ -174,6 +181,9 @@ public class BacaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 imgCheck.setVisibility(View.VISIBLE);
+
+                Log.i("BacaHabib", alphIndex + "");
+                txtIndex.setText(alphIndex + "");
             }
         });
     }
