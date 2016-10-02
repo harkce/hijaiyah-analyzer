@@ -57,6 +57,7 @@ public class BacaActivity extends AppCompatActivity {
         btnVerifikasi = (Button) findViewById(R.id.btn_verifikasi);
 
         txtIndex = (TextView) findViewById(R.id.txt_index);
+        txtIndex.setText(alphIndex + "");
 
         btnStop.setEnabled(false);
         btnPlay.setEnabled(false);
@@ -183,7 +184,6 @@ public class BacaActivity extends AppCompatActivity {
                 imgCheck.setVisibility(View.VISIBLE);
 
                 Log.i("BacaHabib", alphIndex + "");
-                txtIndex.setText(alphIndex + "");
             }
         });
     }
